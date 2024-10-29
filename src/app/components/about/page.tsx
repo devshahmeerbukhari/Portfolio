@@ -6,9 +6,8 @@ import { urlFor } from "@/sanity/lib/image";
 async function AboutPage() {
   const getDomains = async () => {
     return await client.fetch(`*[_type == "domains"]`);
-  }
+  };
   const domains = await getDomains();
-  console.log("Logo", domains)
   return (
     <div className="flex flex-col min-h-[130vh]">
       <div className="flex flex-col justify-center mx-auto max-w-[60%] min-h-[80vh]">
@@ -49,19 +48,22 @@ async function AboutPage() {
         </p>
       </div>
       <div className="flex flex-row justify-center">
-        {
-          domains.map((domain:any)=>{
-            return <div key={domain._id} className="bg-slate-600 min-w-[300px] min-h-[300px] flex flex-col justify-evenly items-center ml-5 mr-5 border rounded-3xl hover:scale-105 transition-transform duration-300">  
+        {domains.map((domain: any) => {
+          return (
+            <div
+              key={domain._id}
+              className="bg-slate-600 min-w-[300px] min-h-[300px] flex flex-col justify-evenly items-center ml-5 mr-5 border rounded-3xl hover:scale-105 transition-transform duration-300 hover:cursor-pointer"
+            >
               <Image
-                src={urlFor(domain?.logo).url()} 
+                src={urlFor(domain?.logo).url()}
                 width={60}
                 height={60}
                 alt={domain.Title || " Blog Image"}
               />
               <p>{domain.DomainName}</p>
             </div>
-          })
-        }
+          );
+        })}
       </div>
     </div>
   );

@@ -7,6 +7,17 @@
   --foreground: #171717;
 }
 
+.fade-in {
+  opacity: 1;
+  transition: opacity 0.5s ease-in; /* Matches the JavaScript timeout duration */
+}
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.5s ease-out; /* Matches the JavaScript timeout duration */
+}
+
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
