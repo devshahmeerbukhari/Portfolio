@@ -7,6 +7,12 @@ const nextConfig: NextConfig = {
       {
         hostname: 'cdn.sanity.io'
       },
+      {
+        hostname: 'encrypted-tbn0.gstatic.com',
+      },
+      {
+        hostname: 'media.licdn.com',
+      },
     ],
   },
 };
