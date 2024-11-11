@@ -22,7 +22,7 @@ function Navbar() {
                     </Link>
                 </li>
                 <li className='hover:text-white'>
-                    <Link href="/components/services" scroll={false}>
+                    <Link href="/#" scroll={false}>
                         Services
                     </Link>
                 </li>

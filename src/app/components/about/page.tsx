@@ -2,12 +2,18 @@ import React from "react";
 import { client } from "@/sanity/lib/client";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
+import RotatingCircle from "../animation/RotatingCircle";
 
 async function AboutPage() {
   const getDomains = async () => {
     return await client.fetch(`*[_type == "domains"]`);
   };
+  const getTechnologies = async () => {
+    return await client.fetch(`*[_type == "circleAnimation"]`);
+  }
   const domains = await getDomains();
+  const technologies = await getTechnologies();
+  console.log("Technologiesssss: ", technologies)
   return (
     <div className="flex flex-col min-h-[130vh]">
       <div className="flex flex-col justify-center mx-auto max-w-[60%] min-h-[80vh]">
@@ -64,6 +70,9 @@ async function AboutPage() {
             </div>
           );
         })}
+      </div>
+      <div className="m-28">
+        <RotatingCircle technologies={technologies}/>
       </div>
     </div>
   );
