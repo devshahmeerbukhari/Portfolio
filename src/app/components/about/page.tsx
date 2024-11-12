@@ -2,7 +2,6 @@ import React from "react";
 import { client } from "@/sanity/lib/client";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
-import RotatingCircle from "../animation/RotatingCircle";
 
 async function AboutPage() {
   const getDomains = async () => {
@@ -15,7 +14,7 @@ async function AboutPage() {
   const technologies = await getTechnologies();
   console.log("Technologiesssss: ", technologies)
   return (
-    <div className="flex flex-col min-h-[130vh]">
+    <div className="flex flex-col min-h-[170vh]">
       <div className="flex flex-col justify-center mx-auto max-w-[60%] min-h-[80vh]">
         <p className="uppercase text-gray-400">Introduction</p>
         <h1 className="text-7xl font-bold">Overview</h1>
@@ -71,9 +70,26 @@ async function AboutPage() {
           );
         })}
       </div>
-      <div className="m-28">
-        <RotatingCircle technologies={technologies}/>
+      <div className="flex mt-36 flex-col items-center">
+        <p className="uppercase text-gray-300 text-lg">what i excel at</p>
+        <h1 className="text-7xl font-bold text-white mt-3">Skills</h1>
+        <div className="flex flex-row justify-center">
+          {technologies.map((technology: any) => {
+            return (
+              <div className="flex items-center p-5 mt-10 space-x-4" key={technology._id}>
+                <Image
+                  src={urlFor(technology?.logo).url()}
+                  width={60}
+                  height={60}
+                  alt={technology.Title || " Blog Image"}
+                />
+              </div>
+            )
+          })}
+        </div>
       </div>
+
+
     </div>
   );
 }
