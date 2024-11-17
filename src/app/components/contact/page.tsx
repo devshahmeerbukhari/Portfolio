@@ -1,8 +1,53 @@
-import React from 'react';
+"use client";
+import React, { useState } from "react";
+import { ContactSchema } from "@/app/validation/schemas";
+
+type ContactFormData = {
+  fullName: string;
+  email: string;
+  contactNumber: string;
+  subject: string;
+  projectDetails: string;
+};
+
+type ValidationError = {
+  [key: string]: string[];
+};
 
 function Contact() {
+  const [contactFormData, setContactFormData] = useState<ContactFormData>({
+    fullName: "",
+    email: "",
+    contactNumber: "",
+    subject: "",
+    projectDetails: "",
+  });
+  const [error, setError] = useState<ValidationError>({});
+
+  const handleChanges = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setContactFormData({
+      ...contactFormData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const validation = ContactSchema.safeParse(contactFormData);
+    if (!validation.success) {
+      const fieldErrors = validation.error.formErrors.fieldErrors;
+      setError(fieldErrors as ValidationError);
+    } else {
+      setError({});
+      console.log("Form submitted successfully", contactFormData);
+      // Perform submission logic (e.g., API call)
+    }
+  };
+
   return (
-    <div className="flex justify-center items-center min-h-screen ">
+    <div className="flex justify-center items-center min-h-screen">
       <div className="flex flex-col lg:flex-row justify-between border border-slate-900 rounded-3xl items-stretch bg-slate-700 w-full max-w-6xl h-auto shadow-md rounded-lg">
         {/* Left Section */}
         <div className="flex flex-col justify-center items-start bg-slate-700 text-white p-6 lg:p-8 lg:w-1/2 overflow-hidden">
@@ -11,8 +56,11 @@ function Contact() {
           </h1>
           <p className="mb-4">Let's create something together</p>
           <div className="text-sm">
-            Mail at: 
-            <a href="mailto:shahmeerbukahri13@gmail.com" className="text-blue-400 ml-1">
+            Mail at:
+            <a
+              href="mailto:shahmeerbukahri13@gmail.com"
+              className="text-blue-400 ml-1"
+            >
               shahmeerbukahri13@gmail.com
             </a>
           </div>
@@ -20,8 +68,11 @@ function Contact() {
 
         {/* Right Section (Form) */}
         <div className="flex justify-center items-center bg-gray-50 p-6 lg:w-1/2">
-          <form className="bg-white shadow-md rounded-lg p-6 w-full max-w-md">
-            <div className="mb-4">
+          <form
+            onSubmit={handleSubmit}
+            className="bg-white shadow-md text-black rounded-lg p-6 w-full max-w-md"
+          >
+            <div className="">
               <label
                 htmlFor="fullName"
                 className="block text-gray-700 text-sm font-medium mb-2"
@@ -31,12 +82,22 @@ function Contact() {
               <input
                 type="text"
                 id="fullName"
+                name="fullName"
+                value={contactFormData.fullName}
+                onChange={handleChanges}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter your full name"
               />
+              <div className="min-h-8">
+                {error.fullName && (
+                  <p className="text-red-500">
+                    {error.fullName[0]}
+                  </p>
+                )}
+              </div>
             </div>
 
-            <div className="mb-4">
+            <div className="">
               <label
                 htmlFor="email"
                 className="block text-gray-700 text-sm font-medium mb-2"
@@ -46,27 +107,47 @@ function Contact() {
               <input
                 type="email"
                 id="email"
+                name="email"
+                value={contactFormData.email}
+                onChange={handleChanges}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter your email"
               />
+              <div className="min-h-8">
+                {error.email && (
+                  <p className="text-red-500">
+                    {error.email[0]}
+                  </p>
+                )}
+              </div>
             </div>
 
-            <div className="mb-4">
+            <div className="">
               <label
-                htmlFor="phone"
+                htmlFor="contactNumber"
                 className="block text-gray-700 text-sm font-medium mb-2"
               >
                 Phone Number*
               </label>
               <input
                 type="tel"
-                id="phone"
+                id="contactNumber"
+                name="contactNumber"
+                value={contactFormData.contactNumber}
+                onChange={handleChanges}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter your phone number"
               />
+              <div className="min-h-8">
+                {error.contactNumber && (
+                  <p className="text-red-500">
+                    {error.contactNumber[0]}
+                  </p>
+                )}
+              </div>
             </div>
 
-            <div className="mb-4">
+            <div className="">
               <label
                 htmlFor="subject"
                 className="block text-gray-700 text-sm font-medium mb-2"
@@ -76,24 +157,44 @@ function Contact() {
               <input
                 type="text"
                 id="subject"
+                name="subject"
+                value={contactFormData.subject}
+                onChange={handleChanges}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter the subject"
               />
+              <div className="min-h-8">
+                {error.subject && (
+                  <p className="text-red-500">
+                    {error.subject[0]}
+                  </p>
+                )}
+              </div>
             </div>
 
-            <div className="mb-6">
+            <div className="mb-2">
               <label
-                htmlFor="message"
+                htmlFor="projectDetails"
                 className="block text-gray-700 text-sm font-medium mb-2"
               >
                 Tell me more about your project
               </label>
               <textarea
-                id="message"
+                id="projectDetails"
+                name="projectDetails"
                 rows={4}
+                value={contactFormData.projectDetails}
+                onChange={handleChanges}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Type your message here."
               ></textarea>
+              <div className="min-h-8">
+                {error.projectDetails && (
+                  <p className="text-red-500">
+                    {error.projectDetails[0]}
+                  </p>
+                )}
+              </div>
             </div>
 
             <button
