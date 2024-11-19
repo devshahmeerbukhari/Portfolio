@@ -33,7 +33,7 @@ function Contact() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const validation = ContactSchema.safeParse(contactFormData);
     if (!validation.success) {
@@ -41,6 +41,30 @@ function Contact() {
       setError(fieldErrors as ValidationError);
     } else {
       setError({});
+
+      try{
+        const response = await fetch("api/sendEmail", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(contactFormData),
+        });
+        if(response.ok){
+          alert("Email sent successfully!");
+          setContactFormData({
+            fullName: "",
+            email: "",
+            contactNumber: "",
+            subject: "",
+            projectDetails: "",
+          });
+        } else{
+          alert("Failed to send email.");
+        }
+      }catch(error){
+        alert("An error occurred. Please try again later.");
+      }
       console.log("Form submitted successfully", contactFormData);
       // Perform submission logic (e.g., API call)
     }
