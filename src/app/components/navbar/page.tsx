@@ -34,7 +34,7 @@ function Navbar() {
             </ul>
         </nav>
         <div>
-            <button className='border border-whites px-5 py-1 rounded-3xl hover:text-white'>Let's Connect</button>
+            <button className='border border-whites px-5 py-1 rounded-3xl hover:text-white'>Let&apos;s Connect</button>
         </div>
     </div>
   )

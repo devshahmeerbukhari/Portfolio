@@ -41,31 +41,32 @@ function Contact() {
       setError(fieldErrors as ValidationError);
     } else {
       setError({});
+      alert("Message sent successfully!");
 
-      try{
-        const response = await fetch("api/sendEmail", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(contactFormData),
-        });
-        if(response.ok){
-          alert("Email sent successfully!");
-          setContactFormData({
-            fullName: "",
-            email: "",
-            contactNumber: "",
-            subject: "",
-            projectDetails: "",
-          });
-        } else{
-          alert("Failed to send email.");
-        }
-      }catch(error){
-        alert("An error occurred. Please try again later.");
-      }
-      console.log("Form submitted successfully", contactFormData);
+      // try{
+      //   const response = await fetch("api/sendEmail", {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify(contactFormData),
+      //   });
+      //   if(response.ok){
+      //     alert("Email sent successfully!");
+      //     setContactFormData({
+      //       fullName: "",
+      //       email: "",
+      //       contactNumber: "",
+      //       subject: "",
+      //       projectDetails: "",
+      //     });
+      //   } else{
+      //     alert("Failed to send email.");
+      //   }
+      // }catch(error){
+      //   alert("An error occurred. Please try again later.");
+      // }
+      // console.log("Form submitted successfully", contactFormData);
       // Perform submission logic (e.g., API call)
     }
   };
@@ -76,9 +77,9 @@ function Contact() {
         {/* Left Section */}
         <div className="flex flex-col justify-center items-start bg-slate-700 text-white p-6 lg:p-8 lg:w-1/2 overflow-hidden">
           <h1 className="text-3xl font-bold mb-4">
-            Let's chat. <br /> Tell about your project.
+            Let&apos;s chat. <br/> Tell about your project.
           </h1>
-          <p className="mb-4">Let's create something together</p>
+          <p className="mb-4">Let&apos;s create something together</p>
           <div className="text-sm">
             Mail at:
             <a

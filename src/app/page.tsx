@@ -2,12 +2,12 @@
 import { useState, useEffect } from "react";
 
 export default function Home() {
-  const [professions, setProfessions] = useState<string[]>([
+  const professions: string[] = [
     "Front End Developer",
     "Backend Developer",
     "Full Stack Developer",
     "Generative AI",
-  ]);
+  ];
 
   const [currentDisplay, setCurrentDisplay] = useState<[number, string]>([
     4,
@@ -37,7 +37,7 @@ export default function Home() {
   return (
     <div className="flex flex-col justify-center items-center min-h-[90vh]">
       <h1 className="text-2xl font-bold text-6xl">
-        Hi, I'm Shahmeer <span className="text-[#915EFF]">Bukhari</span>
+        Hi, I&apos;m Shahmeer <span className="text-[#915EFF]">Bukhari</span>
       </h1>
       <p className={`mt-3 text-blue-400 ${fadeClass} text-8xl min-h-[100px]`}>
         {currentDisplay[1]}

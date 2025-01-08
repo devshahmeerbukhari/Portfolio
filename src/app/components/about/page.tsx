@@ -3,16 +3,57 @@ import { client } from "@/sanity/lib/client";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 
+// Technologiesssss:  [
+//   {
+//     _updatedAt: '2024-11-11T12:42:57Z',
+//     _createdAt: '2024-11-11T12:42:47Z',
+//     _rev: 't9EQ0nkXnwA0WYtTuXfBbu',
+//     _type: 'circleAnimation',
+//     logo: { _type: 'image', asset: [Object] },
+//     _id: '1915bad3-a7f1-4971-98f7-a34c1e38e8d5',
+//     technology: 'Tailwind'
+//   },
+type Technology = {
+  _updatedAt: Date;
+  _createdAt: Date;
+  _rev: string;
+  _type: string;
+  logo: {
+    _type: string;
+    asset: [object];
+  };
+  _id: string;
+  technology: string;
+};
+// {
+//   _type: 'domains',
+//   logo: { _type: 'image', asset: [Object] },
+//   _id: 'b81f1d52-bd94-4cc4-9570-644efe386e46',
+//   _updatedAt: '2024-10-28T10:53:31Z',
+//   DomainName: 'Front-End Developer',
+//   _createdAt: '2024-10-28T10:53:02Z',
+//   _rev: 'chRk35ZEtkZXBZt9pB8rEw'
+// }
+type Domain = {
+  _type: string,
+  logo: { _type: string; asset: [object] };
+  _id: string;
+  _updatedAt: Date;
+  DomainName: string;
+  _createdAt: Date;
+  _rev: string;
+};
 async function AboutPage() {
   const getDomains = async () => {
     return await client.fetch(`*[_type == "domains"]`);
   };
   const getTechnologies = async () => {
     return await client.fetch(`*[_type == "circleAnimation"]`);
-  }
-  const domains = await getDomains();
-  const technologies = await getTechnologies();
-  console.log("Technologiesssss: ", technologies)
+  };
+  const domains: Domain[] = await getDomains();
+  const technologies: Technology[] = await getTechnologies();
+  console.log("DOmainss: ", domains);
+  console.log("Technologiesssss: ", technologies);
   return (
     <div className="flex flex-col min-h-[170vh]">
       <div className="flex flex-col justify-center mx-auto max-w-[60%] min-h-[80vh]">
@@ -53,7 +94,7 @@ async function AboutPage() {
         </p>
       </div>
       <div className="flex flex-row justify-center">
-        {domains.map((domain: any) => {
+        {domains.map((domain: Domain) => {
           return (
             <div
               key={domain._id}
@@ -63,7 +104,7 @@ async function AboutPage() {
                 src={urlFor(domain?.logo).url()}
                 width={60}
                 height={60}
-                alt={domain.Title || " Blog Image"}
+                alt={domain.DomainName || " Blog Image"}
               />
               <p>{domain.DomainName}</p>
             </div>
@@ -74,22 +115,23 @@ async function AboutPage() {
         <p className="uppercase text-gray-300 text-lg">what i excel at</p>
         <h1 className="text-7xl font-bold text-white mt-3">Skills</h1>
         <div className="flex flex-row justify-center">
-          {technologies.map((technology: any) => {
+          {technologies.map((technology: Technology) => {
             return (
-              <div className="flex items-center p-5 mt-10 space-x-4" key={technology._id}>
+              <div
+                className="flex items-center p-5 mt-10 space-x-4"
+                key={technology._id}
+              >
                 <Image
                   src={urlFor(technology?.logo).url()}
                   width={60}
                   height={60}
-                  alt={technology.Title || " Blog Image"}
+                  alt={technology.technology || " Blog Image"}
                 />
               </div>
-            )
+            );
           })}
         </div>
       </div>
-
-
     </div>
   );
 }
