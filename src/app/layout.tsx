@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "./components/navbar/page";
+import BlockchainNodes from "./components/BlockchainNodes";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -29,8 +30,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-900 text-white`}
       >
-        <Navbar/>
-        {children}
+        <Navbar />
+        <main className="flex-grow relative">{children}</main>
+
+        {/* Move particles wrapper outside of main content, fixed position */}
+        <div className="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none">
+          <BlockchainNodes />
+        </div>
       </body>
     </html>
   );
