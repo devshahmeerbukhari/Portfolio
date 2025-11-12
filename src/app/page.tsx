@@ -34,6 +34,7 @@ export default function Home() {
     return () => clearTimeout(intervalId); // Clean up the timeout on unmount
   }, [currentDisplay, professions]);
 
+  
   return (
     <>
       <style jsx>{`
