@@ -1,3 +1,4 @@
+'use client'
 import React from "react";
 import Image from "next/image";
 
@@ -27,7 +28,6 @@ const workResponsibilities: WorkResponsibility[] = [
       "Ensuring the portal’s architecture is optimized for performance, reliability, and data security within a controlled environment.",
     ],
   },
-
   {
     src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKL9X9GXvaXXSnUmZTncE3hUokvNkmFwPiKw&s",
     title: "Full-Stack Developer (Freelance Project)",
@@ -44,7 +44,6 @@ const workResponsibilities: WorkResponsibility[] = [
       "Deployed and tested the complete solution, ensuring scalability, performance, and cross-device responsiveness.",
     ],
   },
-
   {
     src: "https://media.licdn.com/dms/image/v2/D4E0BAQEG1JgFWlO_Mg/company-logo_200_200/B4EZiueV8gGwAM-/0/1755273849503/dexterzsol_logo?e=2147483647&v=beta&t=K7mHWnVZKyQ7I2F1BwSVYeAlaDaa_emJZknn-kFkxA4",
     title: "Front-End Developer",
@@ -61,7 +60,6 @@ const workResponsibilities: WorkResponsibility[] = [
       "Worked closely with backend and design teams to ensure smooth functionality, scalability, and on-time delivery of features.",
     ],
   },
-
   {
     src: "https://media.licdn.com/dms/image/v2/D4D0BAQEMRfX2ouW2lw/company-logo_200_200/company-logo_200_200/0/1727855093948/prodigy_infotech_logo?e=2147483647&v=beta&t=yKzoYTxZSd47gGP9jF__ycnWkrjvAV6XJgAPU3vi2io",
     title: "Full-Stack Developer",
@@ -94,45 +92,64 @@ const workResponsibilities: WorkResponsibility[] = [
 
 function Work() {
   return (
-    <div className="relative flex flex-col items-center py-10 pb-20">
-      {/* Timeline line — visible only on large screens */}
-      <div className="absolute ml-4 h-full w-1 bg-gray-300 hidden lg:block"></div>
-
-      {workResponsibilities.map((responsibility, index) => (
-        <div
-          key={index}
-          className="flex flex-col md:flex-row items-center md:items-start w-full md:w-auto relative"
-        >
-          {/* Logo */}
+    <div className="relative flex flex-col items-center py-10 px-4 md:px-8 lg:px-20 max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
+        {workResponsibilities.map((responsibility, index) => (
           <div
-            className={`relative md:top-32 md:left-52 mb-5 md:mb-0 flex justify-center md:block`}
+            key={index}
+            className="bg-slate-600 p-5 rounded-lg border-b-4 border-white border-opacity-0 shadow-md flex flex-col items-center"
+            style={{ boxShadow: "0 4px 12px rgba(0,0,0,0.25)" }}
           >
-            <Image
-              src={responsibility.src}
-              alt="img"
-              width={50}
-              height={50}
-              className="border-4 rounded-full border-gray-300"
-            />
-          </div>
+            {/* Logo on top centered */}
+            <div className="mb-3 flex justify-center w-full">
+              <Image
+                src={responsibility.src}
+                alt={`${responsibility.company} logo`}
+                width={56}
+                height={56}
+                className="border-2 rounded-full border-gray-300 shadow-sm"
+                priority={index === 0}
+              />
+            </div>
 
-          {/* Card */}
-          <div
-            className={`relative mt-5 md:mt-20 top-0 md:top-12 max-w-[400px] bg-slate-600 p-5 rounded-xl border-b-4 border-white text-center md:text-left 
-        ${index % 2 === 0 ? "md:right-72" : "md:left-60"} w-[90%] md:w-auto`}
-          >
-            <h1 className="text-2xl md:text-3xl">{responsibility.title}</h1>
-            <p className="text-gray-400 text-sm md:text-base">
-              {responsibility.company} ({responsibility.date})
+            <h1 className="text-xl md:text-2xl font-bold tracking-tight leading-snug text-center w-full">
+              {responsibility.title}
+            </h1>
+            <p className="text-gray-400 text-xs md:text-sm mt-1 font-semibold italic text-center w-full">
+              {responsibility.company} <span className="text-gray-300">|</span>{" "}
+              <time dateTime={responsibility.date}>{responsibility.date}</time>
             </p>
-            <ol className="list-disc pl-5 mt-5 text-sm md:text-base text-left">
-              {responsibility.tasks.map((task, taskIndex) => (
-                <li key={taskIndex}>{task}</li>
-              ))}
-            </ol>
+            <div className="mt-3 w-full max-h-44 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-700 rounded">
+              <ol className="list-disc pl-5 text-xs md:text-sm space-y-1">
+                {responsibility.tasks.map((task, taskIndex) => (
+                  <li key={taskIndex} className="leading-relaxed">
+                    {task}
+                  </li>
+                ))}
+              </ol>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
+      <style jsx>{`
+        /* Custom scrollbar for better appearance */
+        ::-webkit-scrollbar {
+          width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+          background: #2a2e37;
+          border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb {
+          background-color: #4b5563;
+          border-radius: 3px;
+        }
+        /* Firefox scrollbar */
+        * {
+          scrollbar-width: thin;
+          scrollbar-color: #4b5563 #2a2e37;
+        }
+      `}</style>
     </div>
   );
 }

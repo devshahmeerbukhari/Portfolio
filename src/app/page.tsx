@@ -29,19 +29,37 @@ export default function Home() {
       }, 500); // Match this duration with the CSS transition duration
     };
 
-    const intervalId = setTimeout(updateProfession, 1000); // Update every 3 seconds
+    const intervalId = setTimeout(updateProfession, 1000); // Update every 1 second
 
     return () => clearTimeout(intervalId); // Clean up the timeout on unmount
   }, [currentDisplay, professions]);
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-[90vh]">
-      <h1 className="text-2xl font-bold text-6xl">
-        Hi, I&apos;m Shahmeer <span className="text-[#915EFF]">Bukhari</span>
-      </h1>
-      <p className={`mt-3 text-blue-400 ${fadeClass} text-8xl min-h-[100px]`}>
-        {currentDisplay[1]}
-      </p>
-    </div>
+    <>
+      <style jsx>{`
+        .fade-in {
+          opacity: 1;
+          transition: opacity 0.5s ease-in;
+        }
+        .fade-out {
+          opacity: 0;
+          transition: opacity 0.5s ease-out;
+        }
+      `}</style>
+      <div className="flex flex-col justify-center items-center min-h-[90vh] px-4 text-center">
+        <h1 className="font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight max-w-4xl">
+          Hi, I&apos;m{" "}
+          <span className="text-[#915EFF]">
+            Shahmeer Bukhari
+          </span>
+        </h1>
+        <p
+          className={`mt-4 text-blue-400 ${fadeClass} min-h-[6rem] text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold`}
+          aria-live="polite"
+        >
+          {currentDisplay[1]}
+        </p>
+      </div>
+    </>
   );
 }
