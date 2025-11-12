@@ -48,7 +48,7 @@ function Contact() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen px-4 py-8 relative overflow-hidden bg-gray-900">
+    <div className="flex justify-center items-center min-h-screen px-4 py-8 relative overflow-hidden bg-transparent">
       {/* Outer Card */}
       <div className="w-full max-w-6xl bg-slate-200/10 backdrop-blur-xl rounded-3xl border border-slate-500/20 shadow-2xl p-6 md:p-8 lg:p-12 transition-transform duration-300 hover:scale-[1.01]">
         <div className="flex flex-col lg:flex-row justify-between gap-8">
